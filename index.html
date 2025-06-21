@@ -80,6 +80,8 @@
     .btn:hover {
       background: var(--primary-dark);
     }
+
+
   </style>
 </head>
 <body>
@@ -108,6 +110,7 @@
   });
 </script>
 
+
   <!-- Page 1: Home -->
   <section id="home" class="section">
     <div data-aos="fade-up">
@@ -122,9 +125,11 @@
   </section>
 
   <!-- Page 2: When -->
-  <section id="when" class="section">
+  <section id="when" class="section" style="background-image:bg.jpeg">
     <div data-aos="fade-up">
       <h2>You're Cordially Invited</h2>
+
+
       <div class="details">
         <div class="card" data-aos="zoom-in">
           <h3>📅 Date</h3>
@@ -135,6 +140,8 @@
           <p>Morning 9:00 AM</p>
         </div>
       </div>
+<div id="countdown" style="font-size: 20px; font-weight: bold; color:#69352e; margin-top: 10px;"></div>
+
       <div class="btn-group">
 <a class="btn" href="#home">🔙 Back</a>
         <a class="btn" href="#map">📍 Where</a>
@@ -155,12 +162,33 @@
     </div>
   </section>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init({
       duration: 1000,
       once: true
     });
+
+    // Countdown Timer (Updated for July 31st, 2025)
+    const countdownEl = document.getElementById("countdown");
+    const targetDate = new Date("2025-07-31T09:00:00+05:30").getTime();
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        countdownEl.innerHTML = "🎉 It's time for the celebration!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      countdownEl.innerHTML = `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s left`;
+    }, 1000);
   </script>
 </body>
 </html>
