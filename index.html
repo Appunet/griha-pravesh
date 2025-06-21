@@ -83,15 +83,38 @@
   </style>
 </head>
 <body>
+<audio id="bg-music" loop preload="auto">
+  <source src="bg.mp3" type="audio/mp3" />
+</audio>
+
+<button id="music-toggle" class="btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
+  🔈 Music
+</button>
+
+<script>
+  const music = document.getElementById('bg-music');
+  const toggle = document.getElementById('music-toggle');
+  let playing = false;
+
+  toggle.addEventListener('click', () => {
+    if (playing) {
+      music.pause();
+      toggle.textContent = '🔈 Music';
+    } else {
+      music.play();
+      toggle.textContent = '🔊 Playing';
+    }
+    playing = !playing;
+  });
+</script>
 
   <!-- Page 1: Home -->
   <section id="home" class="section">
     <div data-aos="fade-up">
-      <h1>🙏 Griha Pravesha Invitation 🙏</h1>
-      <p>Nam Mane – Nimma Aashirvada</p>
+      <h2>Griha Pravesha Invitation</h2>
+      <h4>🙏ನಮ ಮನೆ - ನಿಮ್ಮ ಆಶೀರ್ವಾದ🙏</h4>
       <p>We are delighted to invite you to the opening ceremony of our new home filled with love, blessings, and joy.</p>
       <div class="btn-group">
-<a class="btn" href="#home">🔙 Back</a>
         <a class="btn" href="#when">📅 When</a>
         
       </div>
@@ -105,7 +128,7 @@
       <div class="details">
         <div class="card" data-aos="zoom-in">
           <h3>📅 Date</h3>
-          <p>June 21st, 2025</p>
+          <p>July 31st, 2025</p>
         </div>
         <div class="card" data-aos="zoom-in" data-aos-delay="100">
           <h3>🕰️ Time</h3>
@@ -124,7 +147,7 @@
   <section id="map" class="section">
     <div data-aos="fade-up">
       <h2>📌 Venue</h2>
-      <p>Kori Farm House, Bijapur Main Road, Yatnal-586104</p>
+      <p>Kori Farm House,  Bijapur Main Road Yatnal-586104</p>
       <iframe src="https://maps.google.com/maps?q=bijapur%20karnataka&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
       <div class="btn-group">
         <a class="btn" href="#when">🔙 Back</a>
