@@ -39,7 +39,6 @@
       justify-content: center;
       position: relative;
     }
-    
     .section > * {
       position: relative;
       z-index: 1;
@@ -109,113 +108,128 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
+    #music-toggle {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 9999;
+      background: var(--primary);
+      color: white;
+      border: none;
+      font-size: 1.4rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-<audio id="bg-music" loop autoplay muted preload="auto">
+
+<audio id="bg-music" loop autoplay preload="auto">
   <source src="bg.mp3" type="audio/mp3" />
 </audio>
 
-<button id="music-toggle" class="btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
-  🔊 Playing
-</button>
+<button id="music-toggle">🔊</button>
 
+<section id="home" class="section">
+  <div data-aos="fade-up">
+    <img src="home-bg2.jpeg" alt="Home Image" class="bg-image" />
+    <h2>Griha Pravesha Invitation</h2>
+    <h4>🙏ನಮ್ಮ ಮನೆ - ನಿಮ್ಮ ಆಶೀರ್ವಾದ🙏</h4>
+    <p>We are delighted to invite you to the opening ceremony of our new home filled with love, blessings, and joy.</p>
+    <div class="btn-group">
+      <a class="btn" href="#when">📅 When</a>
+    </div>
+  </div>
+</section>
+
+<!-- Page 2: When -->
+<section id="when" class="section">
+  <div data-aos="fade-up">
+    <img src="home-bg1.jpeg" alt="Ceremony Image" class="bg-image" />
+    <h2>You're Cordially Invited</h2>
+    <div class="details">
+      <div class="card" data-aos="zoom-in">
+        <h3>📅 Date</h3>
+        <p>July 31st, 2025</p>
+      </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="100">
+        <h3>🕰️ Time</h3>
+        <p>Morning 9:00 AM</p>
+      </div>
+    </div>
+    <div id="countdown" style="font-size: 20px; font-weight: bold; color:#69352e; margin-top: 10px;"></div>
+    <div class="btn-group">
+      <a class="btn" href="#home">🔙 Back</a>
+      <a class="btn" href="#map">📍 Where</a>
+    </div>
+  </div>
+</section>
+
+<!-- Page 3: Where -->
+<section id="map" class="section">
+  <div data-aos="fade-up">
+    <h2>📌 Venue</h2>
+    <p>Kori Farm House,  Bijapur Main Road Yatnal-586104</p>
+    <iframe src="https://maps.google.com/maps?q=bijapur%20karnataka&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+    <div class="btn-group">
+      <a class="btn" href="#when">🔙 Back</a>
+    </div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  const music = document.getElementById('bg-music');
-  const toggle = document.getElementById('music-toggle');
-
-  window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-      music.muted = false;
-      music.play();
-    }, 500);
+  AOS.init({
+    duration: 1000,
+    once: true
   });
 
-  toggle.addEventListener('click', () => {
-    if (!music.paused) {
+  const countdownEl = document.getElementById("countdown");
+  const targetDate = new Date("2025-07-31T09:00:00+05:30").getTime();
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+      countdownEl.innerHTML = "🎉 It's time for the celebration!";
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    countdownEl.innerHTML = `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s left`;
+  }, 1000);
+
+  const music = document.getElementById("bg-music");
+  const toggle = document.getElementById("music-toggle");
+  let playing = false;
+
+  window.addEventListener("DOMContentLoaded", () => {
+    music.play().then(() => {
+      playing = true;
+      toggle.innerText = "🔊";
+    }).catch(() => {
+      // autoplay blocked
+    });
+  });
+
+  toggle.addEventListener("click", () => {
+    if (playing) {
       music.pause();
-      toggle.textContent = '🔈 Music';
+      toggle.innerText = "🔈";
     } else {
       music.play();
-      toggle.textContent = '🔊 Playing';
+      toggle.innerText = "🔊";
     }
+    playing = !playing;
   });
 </script>
-
-  <!-- Page 1: Home -->
-  <section id="home" class="section">
-    <div data-aos="fade-up">
-      <img src="home-bg2.jpeg" alt="Home Image" class="bg-image" />
-      <h2>Gruha Pravesha Invitation</h2>
-      <h4>🙏ನಮ್ಮ ಮನೆ - ನಿಮ್ಮ ಆಶೀರ್ವಾದ🙏</h4>
-      <p>We are delighted to invite you to the opening ceremony of our new home filled with love, blessings, and joy.</p>
-      <div class="btn-group">
-        <a class="btn" href="#when">📅 When</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Page 2: When -->
-  <section id="when" class="section">
-    <div data-aos="fade-up">
-      <img src="home-bg1.jpeg" alt="Ceremony Image" class="bg-image" />
-      <h2>You're Cordially Invited</h2>
-      <div class="details">
-        <div class="card" data-aos="zoom-in">
-          <h3>📅 Date</h3>
-          <p>July 31st, 2025</p>
-        </div>
-        <div class="card" data-aos="zoom-in" data-aos-delay="100">
-          <h3>🕰️ Time</h3>
-          <p>Morning 9:00 AM</p>
-        </div>
-      </div>
-      <div id="countdown" style="font-size: 20px; font-weight: bold; color:#69352e; margin-top: 10px;"></div>
-      <div class="btn-group">
-        <a class="btn" href="#home">🔙 Back</a>
-        <a class="btn" href="#map">📍 Where</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Page 3: Where -->
-  <section id="map" class="section">
-    <div data-aos="fade-up">
-      <h2>📌 Venue</h2>
-      <p>Kori Farm House,  Bijapur Main Road Yatnal-586104</p>
-      <iframe src="https://maps.google.com/maps?q=bijapur%20karnataka&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
-      <div class="btn-group">
-        <a class="btn" href="#when">🔙 Back</a>
-      </div>
-    </div>
-  </section>
-
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      duration: 1000,
-      once: true
-    });
-
-    const countdownEl = document.getElementById("countdown");
-    const targetDate = new Date("2025-07-31T09:00:00+05:30").getTime();
-
-    setInterval(() => {
-      const now = new Date().getTime();
-      const diff = targetDate - now;
-
-      if (diff <= 0) {
-        countdownEl.innerHTML = "🎉 It's time for the celebration!";
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      countdownEl.innerHTML = `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s left`;
-    }, 1000);
-  </script>
 </body>
 </html>
