@@ -10,8 +10,8 @@
     :root {
       --primary: #e67e22;
       --primary-dark: #d35400;
-      --bg-light: #fff9e6;
-      --bg-dark: #ffe4b5;
+      --bg-light: #e7e4dd;
+      --bg-dark: #cfc2b3;
       --text: #333;
     }
     * {
@@ -37,6 +37,12 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      position: relative;
+    }
+    
+    .section > * {
+      position: relative;
+      z-index: 1;
     }
     .details {
       display: flex;
@@ -46,7 +52,7 @@
       margin: 1.5rem 0;
     }
     .card {
-      background: #fff;
+      background: #faf5ee;
       border-radius: 1rem;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       padding: 1.2rem;
@@ -75,61 +81,85 @@
       border-radius: 2rem;
       font-weight: 600;
       text-decoration: none;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
     }
     .btn:hover {
       background: var(--primary-dark);
+      transform: scale(1.05);
     }
-
-
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .bg-image {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      border: 6px solid #fff6e5;
+      background-color: #fff;
+      padding: 6px;
+      animation: fadeIn 2s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
-<audio id="bg-music" loop preload="auto">
+<audio id="bg-music" loop autoplay muted preload="auto">
   <source src="bg.mp3" type="audio/mp3" />
 </audio>
 
 <button id="music-toggle" class="btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
-  🔈 Music
+  🔊 Playing
 </button>
 
 <script>
   const music = document.getElementById('bg-music');
   const toggle = document.getElementById('music-toggle');
-  let playing = false;
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      music.muted = false;
+      music.play();
+    }, 500);
+  });
 
   toggle.addEventListener('click', () => {
-    if (playing) {
+    if (!music.paused) {
       music.pause();
       toggle.textContent = '🔈 Music';
     } else {
       music.play();
       toggle.textContent = '🔊 Playing';
     }
-    playing = !playing;
   });
 </script>
-
 
   <!-- Page 1: Home -->
   <section id="home" class="section">
     <div data-aos="fade-up">
-      <h2>Griha Pravesha Invitation</h2>
-      <h4>🙏ನಮ ಮನೆ - ನಿಮ್ಮ ಆಶೀರ್ವಾದ🙏</h4>
+      <img src="home-bg2.jpeg" alt="Home Image" class="bg-image" />
+      <h2>Gruha Pravesha Invitation</h2>
+      <h4>🙏ನಮ್ಮ ಮನೆ - ನಿಮ್ಮ ಆಶೀರ್ವಾದ🙏</h4>
       <p>We are delighted to invite you to the opening ceremony of our new home filled with love, blessings, and joy.</p>
       <div class="btn-group">
         <a class="btn" href="#when">📅 When</a>
-        
       </div>
     </div>
   </section>
 
   <!-- Page 2: When -->
-  <section id="when" class="section" style="background-image:bg.jpeg">
+  <section id="when" class="section">
     <div data-aos="fade-up">
+      <img src="home-bg1.jpeg" alt="Ceremony Image" class="bg-image" />
       <h2>You're Cordially Invited</h2>
-
-
       <div class="details">
         <div class="card" data-aos="zoom-in">
           <h3>📅 Date</h3>
@@ -140,12 +170,10 @@
           <p>Morning 9:00 AM</p>
         </div>
       </div>
-<div id="countdown" style="font-size: 20px; font-weight: bold; color:#69352e; margin-top: 10px;"></div>
-
+      <div id="countdown" style="font-size: 20px; font-weight: bold; color:#69352e; margin-top: 10px;"></div>
       <div class="btn-group">
-<a class="btn" href="#home">🔙 Back</a>
+        <a class="btn" href="#home">🔙 Back</a>
         <a class="btn" href="#map">📍 Where</a>
-        
       </div>
     </div>
   </section>
@@ -162,14 +190,13 @@
     </div>
   </section>
 
-   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init({
       duration: 1000,
       once: true
     });
 
-    // Countdown Timer (Updated for July 31st, 2025)
     const countdownEl = document.getElementById("countdown");
     const targetDate = new Date("2025-07-31T09:00:00+05:30").getTime();
 
